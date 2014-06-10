@@ -12,11 +12,12 @@ namespace Prime
             IChain<CollectorRequest, TDataCollection> sourceCollector,
             IChain<TChainSmallIn, TChainSmallOut> privateChaine)
         {
+            var collectorBlock = sourceCollector.ToFunctionalBlock();
+            var functionalBlock = privateChaine.ToFunctionalBlock();
+
             return factory.CreateChain(new FunctionalBlock<TRepeaterBigIn, TRepeaterBigOut>(
                 input =>
                 {
-                    var collectorBlock = sourceCollector.ToFunctionalBlock();
-                    var functionalBlock = privateChaine.ToFunctionalBlock();
                     repeaterBlock.Start(input);
                     TChainSmallIn smallIn;
                     TChainSmallOut smallOut = default(TChainSmallOut);
